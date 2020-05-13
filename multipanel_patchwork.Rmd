@@ -299,7 +299,7 @@ class: inverse, center, middle
 class:  center, top
 
 ## Use  |  to Combine Plots in a row!
-```{r, fig.height=4, fig.width=10}
+```{r, fig.height=4, fig.width=12}
 p1 | p2 | p3 | p4
 ```
 
@@ -316,7 +316,7 @@ p1 / p2 / p3 / p4
 class:  center, top
 
 ## Use  +  to Combine Plots in a 2 x 2 Grid!
-```{r, fig.height=6, fig.width=6}
+```{r, fig.height=6, fig.width=9}
 p1 + p2 + p3 + p4
 ```
 ---
@@ -351,7 +351,7 @@ countdown(
 class:  center, top
 
 ## This is Great, but How to Add a Combined Legend?
-```{r, fig.height=6, fig.width=10, echo=FALSE}
+```{r, fig.height=7, fig.width=12, echo=FALSE}
 (p1) / (p2 | (p3/p4))
 ```
 
@@ -381,6 +381,111 @@ class:  center, top
 - multi-line labels with `<br>`
 - can use inline CSS properties including color, font-size, and font-family
 ]
+---
+
+class:  center, top
+
+## Fun with {ggtext}: Replace Legends with Colored Text
+
+```{r, echo = FALSE, fig.width=12}
+mtcars %>%
+  mutate(
+    transmission = ifelse(am == 1, "automatic", "manual")
+  ) %>%
+  ggplot(aes(hp, mpg, color = transmission)) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c(automatic = "#0072B2", manual = "#D55E00"),
+    guide = "none"
+  ) +
+  labs(
+    x = "Horse power",
+    y = "Miles per gallon (MPG)",
+    title = "<span style = 'font-size:14pt; font-family:Helvetica;'>Transmission type impacts fuel efficiency</span><br>MPG is higher for <span style = 'color:#0072B2;'>automatic</span>
+than for <span style = 'color:#D55E00;'>manual</span> transmissions"
+  ) +
+  theme_bw() +
+  theme(
+    text = element_text(family = "Times"),
+    plot.title.position = "plot",
+    plot.title = element_markdown(size = 11, lineheight = 1.2)
+  )
+```
+
+---
+
+class:  center, top
+
+## Fun with {ggtext}: Add boxes to axes, titles
+```{r, echo = FALSE, fig.width=12}
+
+p <- iris %>%
+  filter(Species == 'versicolor') %>% 
+  ggplot() +
+  aes(x= Sepal.Width, y = Sepal.Length) +
+  geom_point()+
+  theme_minimal() +
+  geom_smooth(method = 'lm') +
+  theme(plot.background = element_rect(color='black')) 
+
+
+p + labs(
+  title = "<b>The Unmitigated Awesomeness of Statins</b>",
+  caption = "<b>Figure 1.</b>
+    <span style = 'font-size:10pt'>This is an Amazing Plot. *Look at this
+    preliminary data*, **It is great.**
+    <span style = 'color:red;'>This work will advance the field,</span>
+    You should *definitely* fund this grant.</span>",
+  x = "Exposure to statin medications (years * mg/d / 50)",
+  y = "Survival (years)<br><span style = 'font-size:8pt'>A measure of
+    the effect of exposure.</span>"
+) +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_textbox_simple(
+      size = 15,
+      lineheight = 1,
+      padding = margin(4, 5.5, 4, 5.5), #padding inside the box, (trouble)
+      margin = margin(0, 0, 7, 0), #margins outside the box, t,r,b,l
+      linetype = 1,
+      r = grid::unit(0, "pt"),
+      fill = 'gray90'
+    ),
+    plot.caption.position = "plot",
+    plot.caption = element_textbox_simple(
+      size = 11,
+      lineheight = 1.1,
+      padding = margin(5.5, 5.5, 5.5, 5.5),
+      margin = margin(0, 0, 0, 0),
+      r = grid::unit(0, "pt"),
+      linetype = 1
+    ),
+    axis.title.x = element_textbox_simple(
+      width = NULL,
+      padding = margin(4, 4, 4, 4),
+      margin = margin(4, 0, 4, 0),
+      linetype = 1,
+      r = grid::unit(8, "pt"),
+      fill = "azure1"
+    ),
+    axis.title.y = element_textbox_simple(
+      hjust = 0,
+      orientation = "left-rotated",
+      minwidth = unit(1, "in"),
+      maxwidth = unit(2, "in"),
+      padding = margin(4, 4, 2, 4),
+      margin = margin(0, 0, 2, 0),
+      fill = "lightsteelblue1"
+    )
+  )
+```
+
+---
+
+class: inverse, center, middle
+
+## Returning to The Quest to Add a Combined Legend
+
 ---
 
 class:  center, top
@@ -539,3 +644,38 @@ https://community.rstudio.com/t/plot-in-a-box-with-long-text-legend-in-a-box/519
 [Stack Overflow](https://stackoverflow.com/questions/60142452/multipanel-plots-with-spanning-figure-legend-in-r-with-ggtext-and-gridtext-in-r)
 <br>
 https://stackoverflow.com/questions/60142452/multipanel-plots-with-spanning-figure-legend-in-r-with-ggtext-and-gridtext-in-r
+
+---
+
+
+class:  center, top
+
+## Other Cool Stuff I Used that You Should Check Out
+
+<br>
+First time using {xaringan} for a presentation
+<br>
+https://github.com/yihui/xaringan
+<br>
+
+The {xaringanthemer} package for the maize and blue color scheme and fonts
+<br>
+https://pkg.garrickadenbuie.com/xaringanthemer/
+<br>
+
+The {countdown} package for the timer
+<br>
+https://github.com/gadenbuie/countdown
+<br>
+
+Side-by-Side Code and Plots in {xaringan}
+https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/
+<br>
+
+Code Highlighting in {xaringan}<br>
+https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/
+<br>
+
+{reprex} for minimal reproducible examples to ask questions <br>
+https://reprex.tidyverse.org/ 
+
