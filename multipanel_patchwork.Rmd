@@ -650,7 +650,7 @@ https://stackoverflow.com/questions/60142452/multipanel-plots-with-spanning-figu
 
 class:  center, top
 
-## Other Cool Stuff I Used that You Should Check Out
+## Other Cool Stuff I Used that Is Worth Checking Out
 
 <br>
 First time using {xaringan} for a presentation
@@ -668,7 +668,7 @@ The {countdown} package for the timer
 https://github.com/gadenbuie/countdown
 <br>
 
-Side-by-Side Code and Plots in {xaringan}
+Side-by-Side Code and Plots in {xaringan}<br>
 https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/
 <br>
 
