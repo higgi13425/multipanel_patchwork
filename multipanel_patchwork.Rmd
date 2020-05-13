@@ -11,6 +11,7 @@ output:
     nature:
       countIncrementalSlides: false
       ratio: "16:9"
+      highlightLines: true
 ---
 
 layout: true
@@ -39,11 +40,10 @@ style_duo(primary_color = "#F2D384" ,
 
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
-                      fig.width = 1, fig.height = 2, 
-                      comment = NA, rows.print = 16)
+                      comment = NA)
 ```
 
-
+---
 class: center, top
 
 # About Me
@@ -71,7 +71,7 @@ class: center, top
 ]
 
 ```{r, echo = FALSE, out.height="30%", out.width="30%", fig.align='right'}
-knitr::include_graphics("Documents/RCode/rstudiocommunity.png")
+knitr::include_graphics("rstudiocommunity.png")
 ```
 
 ---
@@ -126,7 +126,7 @@ class:  center, top
 ]
 
 ```{r, echo = FALSE, out.height="20%", out.width="20%", fig.align='center'}
-knitr::include_graphics("Documents/RCode/first_issue_nature.png")
+knitr::include_graphics("first_issue_nature.png")
 ```
 
 
@@ -193,55 +193,106 @@ p4 <- ggplot(data=plotData) +
 
 class: center, top
 # Panel A: Scatterplot
-
-```{r p1-out, fig.height=5, fig.width=8, echo=FALSE}
-p1 <- ggplot(data=plotData) + 
-  geom_point(aes(x=d3, y=d4)) + labs(tag = "A") +
+.pull-left[
+```{r plot1, eval = FALSE}
+ggplot(data=plotData) + 
+  geom_point(aes(x=d3, y=d4)) + 
+  labs(tag = "A") +
   theme(plot.background = 
           element_rect(color='black'))
-p1
 ```
+]
+
+.pull-right[
+```{r plot1-out,  echo = FALSE}
+ggplot(data=plotData) + 
+  geom_point(aes(x=d3, y=d4)) + 
+  labs(tag = "A") +
+  theme(plot.background = 
+          element_rect(color='black'))
+```
+]
 
 
 ---
 class:  center, top
 
 ## Panel B: Boxplot
-```{r p2-out, fig.height=5, fig.width=8, echo=FALSE}
-p2 <- ggplot(data=plotData) + geom_boxplot(aes(x=d2, y=d1, fill=d2))+ labs(tag = "B") +
+.pull-left[
+```{r, eval=FALSE}
+ggplot(data=plotData) + 
+  geom_boxplot(aes(x=d2, y=d1, fill=d2))+ 
+  labs(tag = "B") +
+  theme(legend.position="none") +
+  theme(plot.background = 
+          element_rect(color='black'))
+```
+]
+
+.pull-right[
+```{r, echo=FALSE}
+ggplot(data=plotData) + 
+  geom_boxplot(aes(x=d2, y=d1, fill=d2))+ 
+  labs(tag = "B") +
   theme(legend.position="none") +
   theme(plot.background = element_rect(color='black'))
-p2
 ```
+]
+
 ---
 
 class:  center, top
 
 ## Panel C: Orchid Histogram
-```{r p3-out, fig.height=3, fig.width=8, echo=FALSE}
-p3 <- ggplot(data=plotData) +
-  geom_histogram(aes(x=d1, color=I("black"), fill=I("orchid"))) + labs(tag = "C") +
-  theme(plot.background = element_rect(color='black'))
-p3
+.pull-left[
+```{r , eval=FALSE}
+ggplot(data=plotData) +
+  geom_histogram(aes(x=d1, color=I("black"), 
+                     fill=I("orchid"))) + 
+  labs(tag = "C") +
+  theme(plot.background = 
+          element_rect(color='black'))
 ```
+]
 
+.pull-right[
+```{r, echo=FALSE}
+ggplot(data=plotData) +
+  geom_histogram(aes(x=d1, color=I("black"), 
+                     fill=I("orchid"))) + 
+  labs(tag = "C") +
+  theme(plot.background = 
+          element_rect(color='black'))
+```
+]
 ---
 
 class:  center, top
 
 ## Panel D: Goldenrod Histogram
-```{r p4-out, fig.height=3, fig.width=8, echo=FALSE}
-p4 <- ggplot(data=plotData) +
+.pull-left[
+```{r, eval=FALSE}
+ggplot(data=plotData) +
+  geom_histogram(aes(x=d3, color=I("black"), 
+                     fill=I("goldenrod"))) + 
+  labs(tag = "D") +
+  theme(plot.background = 
+          element_rect(color='black'))
+```
+]
+.pull-right[
+```{r, echo=FALSE}
+ggplot(data=plotData) +
   geom_histogram(aes(x=d3, color=I("black"), fill=I("goldenrod"))) + labs(tag = "D") +
   theme(plot.background = element_rect(color='black'))
-p4
 ```
+]
 
 ---
 
 class: inverse, center, middle
 
-## Now Combine These Plots into a Multipanel Plot
+## Now Combine These Plots into a Multipanel Plot<br>with {patchwork}
 
 ---
 
@@ -281,6 +332,24 @@ p1 / (p2 | (p3/p4))
 
 class:  center, top
 
+## Code-Along Break for Patchwork
+.left[
+- Look up the patchwork packagedown website
+- https://patchwork.data-imaginist.com/
+- Review the guides
+- Try it out with plots p1 - p4
+- Be creative with (), / , |, and plot_layout()
+- Take 3 minutes to arrange some plots
+]
+```{r, echo=FALSE}
+countdown(
+  minutes = 3,
+  play_sound = TRUE
+)
+```
+---
+class:  center, top
+
 ## This is Great, but How to Add a Combined Legend?
 ```{r, fig.height=6, fig.width=10, echo=FALSE}
 (p1) / (p2 | (p3/p4))
@@ -294,36 +363,98 @@ class: inverse, center, middle
 
 ---
 
+class: inverse, center, middle
+
+## The Side-Quest into {ggtext}:<br>This Turns Out to Be Part of the Solution!
+
+---
+
 class:  center, top
 
-## Now Add the Legend - Attempt 1 with textGrob
+## The {ggtext} package
 .left[
-- Not great
+- Packagedown site at https://wilkelab.org/ggtext/ 
+- allows HTML tag formatting or markdown formatting of text within ggplots!
+- color, italics, bold, images, boxes, superscripts
+- Can be used in axis labels, legend text, annotations, tick labels
+- uses element_markdown() or element_textbox() in place of element_text()
+- multi-line labels with `<br>`
+- can use inline CSS properties including color, font-size, and font-family
 ]
 ---
 
 class:  center, top
 
-## Now Add the Legend - Attempt 2 with ggtext caption
+## Failed Attempts
 .left[
-- Nesting!
+- With a TextGrob - bad
+- with a {ggtext} caption - not great
+- with a {ggtext} textbox_grob - closer
+  - Odd spacing
+  - Turns out each row set to equal height
+- with a {ggtext} plot_annotation - very close!
 ]
+
 ---
 
 class:  center, top
 
-## Now Add the Legend - Attempt 3 with ggtext textbox_grob
-.left[
-- Odd spacing
-- Turns out each row set to equal height
+## Code and Image - {ggtext} plot_annotation 
+.pull-left[
+```{r, eval = FALSE}
+fig_legend <- plot_annotation(
+  caption = "**Figure 1.**  Testing Control vs. Treatment.   A. Scatterplot. 
+  B. The outcomes in the control arm were significantly better than 
+  the Treatment Arm. C. Histogram. D. Another Histogram.",
+  theme = theme(
+    plot.caption = element_textbox_simple(
+      size = 11,
+      box.colour = "black",
+      linetype = 1,
+      padding = unit(c(3, 3, 3, 3), "pt"),
+      r = unit(0, "pt")  )  ) )
+p1 + {
+  p2 + {
+    p3 +
+      p4 +
+      plot_layout(ncol=1)
+  }
+} + fig_legend +
+  plot_layout(ncol=1)
+```
+]
+
+.pull-right[
+```{r, echo = FALSE}
+fig_legend <- plot_annotation(
+  caption = "**Figure 1.**  Testing Control vs. Treatment.   A. Scatterplot. 
+  B. The outcomes in the control arm were significantly better than 
+  the Treatment Arm. C. Histogram. D. Another Histogram.",
+  theme = theme(
+    plot.caption = element_textbox_simple(
+      size = 11,
+      box.colour = "black",
+      linetype = 1,
+      padding = unit(c(3, 3, 3, 3), "pt"),
+      r = unit(0, "pt"))  ))
+p1 + {
+  p2 + {
+    p3 +
+      p4 +
+      plot_layout(ncol=1)
+  }
+} + fig_legend +
+  plot_layout(ncol=1)
+```
 ]
 ---
 
+
 class:  center, top
 
-## Now Add the Legend - Attempt 4 with ggtext plot_annotation
+## Now Add the Legend - with a {ggtext} plot_annotation 
 .left[
-- Close with funky margins (narrower plot_annotation)
+- Very close, but funky margins (narrower plot_annotation)
 - turns out that this inherits margins from plot margins above - now applied to the caption
 - can assign negative left and right margins (5.5 pt) to counteract the default plot margins.
 ]
@@ -333,9 +464,56 @@ class:  center, top
 
 ## Now Add the Legend - Attempt 5 - Solution!
 .left[
-- Can assign negative left and right margins (5.5 pt) to fix.
-- Achievement unlocked!
+- With negative left and right margins (5.5 pt) 
 ]
+```{r, eval = FALSE}
+fig_legend <- plot_annotation(
+  caption = "**Figure 1.**  Testing Control vs. Treatment.   A. Scatterplot. 
+  B. The outcomes in the control arm were significantly better than 
+  the Treatment Arm. C. Histogram. D. Another Histogram.",
+  theme = theme(
+    plot.caption = element_textbox_simple(
+      size = 11,
+      box.colour = "black",
+      linetype = 1,
+      padding = unit(c(3, 3, 3, 3), "pt"),
+      margin = unit(c(0, -5.5, 0, -5.5), "pt"), #<<
+      r = unit(0, "pt")  ) ) )
+
+p1 + {
+  p2 + {
+    p3 + p4 + plot_layout(ncol=1)}} + 
+  fig_legend +
+  plot_layout(ncol=1)
+```
+
+---
+
+class:  center, top
+
+## Now Correct Width Legend - Achievement Unlocked!
+
+```{r, echo = FALSE}
+fig_legend <- plot_annotation(
+  caption = "**Figure 1.**  Testing Control vs. Treatment.   A. Scatterplot. 
+  B. The outcomes in the control arm were significantly better than 
+  the Treatment Arm. C. Histogram. D. Another Histogram.",
+  theme = theme(
+    plot.caption = element_textbox_simple(
+      size = 11,
+      box.colour = "black",
+      linetype = 1,
+      padding = unit(c(3, 3, 3, 3), "pt"),
+      margin = unit(c(0, -5.5, 0, -5.5), "pt"), 
+      r = unit(0, "pt")  ) ) )
+
+p1 + {
+  p2 + {
+    p3 + p4 + plot_layout(ncol=1)}} + 
+  fig_legend +
+  plot_layout(ncol=1)
+```
+
 ---
 
 class:  inverse, center, top
@@ -343,7 +521,7 @@ class:  inverse, center, top
 ## Lessons Learned
 .left[
 - The #rstats community is awesome
-- Use reprex to ask questions on RSC and SO
+- Use {reprex} to ask questions on RStudio Community and Stack Overflow
 - Lots of people are willing to help if you can come up with a *minimal* reproducible example and<br>can state your question (and your end goal) clearly
 ]
 ---
