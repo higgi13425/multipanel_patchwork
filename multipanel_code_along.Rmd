@@ -14,38 +14,35 @@ library(tidyverse)
 remotes::install_github("thomasp85/patchwork")
 library(patchwork)
 
-remotes::install_github("gadenbuie/countdown")
-library(countdown)
-
 remotes::install_github("wilkelab/ggtext")
 library(ggtext)
 
-
-```
-
-```{r, include = FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
                       comment = NA)
-```
 
+```
 
 ## Preparing to Code-Along for Multipanel Plots
 
 - make sure you have {tidyverse}, {patchwork}, and {ggtext} packages installed 
+
 - library() all 3 packages
+
 - Details at the {patchwork} packagedown site: <br>
+
 https://patchwork.data-imaginist.com
 
 - Take 60 seconds to install, library, and explore
 
 
-
-
 ## What Patchwork Can Do For You
 
 - Start with Single (related) Plots
+
 - Use a simple user interface to combine them
+
 - Arrange at will in rows and columns
+
 - Nesting included
 
 
@@ -156,13 +153,20 @@ p1 / (p2 | (p3/p4))
 
 ## Code-Along Break for Patchwork
 
-- Look up the patchwork packagedown website
+- Look up the patchwork packagedown website, at
 - https://patchwork.data-imaginist.com/
-- Review the guides
-- Try it out with plots p1 - p4
-- Be creative with (), / , |, and plot_layout()
-- Take 3 minutes to arrange some plots
 
+- Review the guides
+
+- Try it out with plots p1 - p4
+
+- Be creative with (), / , |, and plot_layout()
+
+- Take 3 minutes to arrange some plots in the code chunk below
+
+```{r}
+p1 / ( p2 | p3 ) / p4
+```
 
 ## This is Great, but How to Add a Combined Legend?
 
@@ -173,11 +177,17 @@ p1 / (p2 | (p3/p4))
 ## The {ggtext} package
 
 - Packagedown site at https://wilkelab.org/ggtext/ 
+
 - allows HTML tag formatting or markdown formatting of text within ggplots!
+
 - color, italics, bold, images, boxes, superscripts
+
 - Can be used in axis labels, legend text, annotations, tick labels
+
 - uses element_markdown() or element_textbox() in place of element_text()
+
 - multi-line labels with `<br>`
+
 - can use inline CSS properties including color, font-size, and font-family
 
 
@@ -280,10 +290,13 @@ p + labs(
 ### Failed Attempts
 
 - With a TextGrob - bad
+
 - with a {ggtext} caption - not great
+
 - with a {ggtext} textbox_grob - closer
   - Odd spacing
   - Turns out each row set to equal height
+  
 - with a {ggtext} plot_annotation - very close!
 
 ## Code and Image - {ggtext} plot_annotation 
@@ -316,7 +329,9 @@ p1 + {
 ## Now Add the Legend - with a {ggtext} plot_annotation 
 
 - Very close, but funky margins (narrower plot_annotation)
+
 - turns out that this inherits margins from plot margins above - now applied to the caption
+
 - can assign negative left and right margins (5.5 pt) to counteract the default plot margins.
 
 
@@ -350,7 +365,9 @@ p1 + {
 ## Lessons Learned
 
 - The #rstats community is awesome
+
 - Use {reprex} to ask questions on RStudio Community and Stack Overflow
+
 - Lots of people are willing to help if you can come up with a *minimal* reproducible example and<br>can state your question (and your end goal) clearly
 
 # Links to RStudio Community and StackOverflow Discussions
