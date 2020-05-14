@@ -13,13 +13,10 @@ output:
       ratio: "16:9"
       highlightLines: true
 ---
-
 layout: true
-
 background-image: url(https://patchwork.data-imaginist.com/reference/figures/logo.png)
 background-position: 3% 97%
 background-size: 8%
-
 ---
 
 ```{r setup, include=FALSE}
@@ -42,7 +39,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE,
                       comment = NA)
 ```
 
----
+
 class: center, top
 
 # About Me
@@ -80,17 +77,14 @@ class: center, top
 ## Preparing to Code-Along for Multipanel Plots
 
 .left[
-- Feel free to join in with the CRAN or dev versions
-```{r, eval=FALSE}
-install.packages("patchwork")
-remotes::install_github("thomasp85/patchwork")
-```
-- make sure you have {tidyverse}, {patchwork}, and {ggtext} packages installed 
-- library() all 3 packages
-- Details at the {patchwork} packagedown site: <br>
+- Feel free to join in and code along with me.     
+- Run the setup code chunk in the code-along Rmarkdown document.     
+- Make sure you have {tidyverse}, {patchwork}, and {ggtext} packages installed      
+- library() all 3 packages     
+- You can find details on **patchwork** at the {patchwork} packagedown site: <br>
 https://patchwork.data-imaginist.com
 
-- Take 60 seconds to install, library, and explore
+- Take 60 seconds to run the setup chunk, and explore the **patchwork** website/guides
 
 ```{r, echo=FALSE}
 countdown(
@@ -299,6 +293,23 @@ class:  center, top
 
 ## Use  |  to Combine Plots in a row!
 ```{r, fig.height=4, fig.width=12}
+p1 <- ggplot(data=plotData) + 
+  geom_point(aes(x=d3, y=d4)) + labs(tag = "A") +
+  theme(plot.background = 
+          element_rect(color='black'))
+
+p2 <- ggplot(data=plotData) + geom_boxplot(aes(x=d2, y=d1, fill=d2))+
+  theme(legend.position="none") + labs(tag = "B") +
+  theme(plot.background = element_rect(color='black'))
+
+p3 <- ggplot(data=plotData) +
+  geom_histogram(aes(x=d1, color=I("black"), fill=I("orchid"))) + labs(tag = "C") +
+  theme(plot.background = element_rect(color='black'))
+
+p4 <- ggplot(data=plotData) +
+  geom_histogram(aes(x=d3, color=I("black"), fill=I("goldenrod"))) + labs(tag = "D") +
+  theme(plot.background = element_rect(color='black'))
+
 p1 | p2 | p3 | p4
 ```
 
@@ -635,12 +646,12 @@ class:  center, top
 # Links to RStudio Community and StackOverflow Discussions
 
 <br><br>
-[RStudio Community](https://community.rstudio.com/t/plot-in-a-box-with-long-text-legend-in-a-box/51962)
-<br>
+RStudio Community
+
 https://community.rstudio.com/t/plot-in-a-box-with-long-text-legend-in-a-box/51962
 <br>
 
-[Stack Overflow](https://stackoverflow.com/questions/60142452/multipanel-plots-with-spanning-figure-legend-in-r-with-ggtext-and-gridtext-in-r)
+Stack Overflow
 <br>
 https://stackoverflow.com/questions/60142452/multipanel-plots-with-spanning-figure-legend-in-r-with-ggtext-and-gridtext-in-r
 
@@ -665,6 +676,11 @@ https://pkg.garrickadenbuie.com/xaringanthemer/
 The {countdown} package for the timer
 <br>
 https://github.com/gadenbuie/countdown
+<br>
+
+Add a logo to each slide in {xaringan}
+<br>
+https://www.garrickadenbuie.com/blog/xaringan-tip-logo-all-slides/
 <br>
 
 Side-by-Side Code and Plots in {xaringan}<br>

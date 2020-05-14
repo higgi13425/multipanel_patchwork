@@ -21,13 +21,10 @@ class: center, middle, inverse, title-slide
 
 ---
 
-
 layout: true
-
 background-image: url(https://patchwork.data-imaginist.com/reference/figures/logo.png)
 background-position: 3% 97%
 background-size: 8%
-
 ---
 
 
@@ -36,7 +33,7 @@ background-size: 8%
 
 
 
----
+
 class: center, top
 
 # About Me
@@ -72,20 +69,16 @@ class: center, top
 ## Preparing to Code-Along for Multipanel Plots
 
 .left[
-- Feel free to join in with the CRAN or dev versions
-
-```r
-install.packages("patchwork")
-remotes::install_github("thomasp85/patchwork")
-```
-- make sure you have {tidyverse}, {patchwork}, and {ggtext} packages installed 
-- library() all 3 packages
-- Details at the {patchwork} packagedown site: &lt;br&gt;
+- Feel free to join in and code along with me.     
+- Run the setup code chunk in the code-along Rmarkdown document.     
+- Make sure you have {tidyverse}, {patchwork}, and {ggtext} packages installed      
+- library() all 3 packages     
+- You can find details on **patchwork** at the {patchwork} packagedown site: &lt;br&gt;
 https://patchwork.data-imaginist.com
 
-- Take 60 seconds to install, library, and explore
+- Take 60 seconds to run the setup chunk, and explore the **patchwork** website/guides
 
-<div class="countdown" id="timer_5ebdbd58" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5ebdc6e5" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 ]
@@ -215,7 +208,7 @@ ggplot(data=plotData) +
 ]
 
 .pull-right[
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -236,7 +229,7 @@ ggplot(data=plotData) +
 ]
 
 .pull-right[
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ]
 ---
 
@@ -255,7 +248,7 @@ ggplot(data=plotData) +
 ```
 ]
 .pull-right[
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -271,10 +264,27 @@ class:  center, top
 ## Use  |  to Combine Plots in a row!
 
 ```r
+p1 &lt;- ggplot(data=plotData) + 
+  geom_point(aes(x=d3, y=d4)) + labs(tag = "A") +
+  theme(plot.background = 
+          element_rect(color='black'))
+
+p2 &lt;- ggplot(data=plotData) + geom_boxplot(aes(x=d2, y=d1, fill=d2))+
+  theme(legend.position="none") + labs(tag = "B") +
+  theme(plot.background = element_rect(color='black'))
+
+p3 &lt;- ggplot(data=plotData) +
+  geom_histogram(aes(x=d1, color=I("black"), fill=I("orchid"))) + labs(tag = "C") +
+  theme(plot.background = element_rect(color='black'))
+
+p4 &lt;- ggplot(data=plotData) +
+  geom_histogram(aes(x=d3, color=I("black"), fill=I("goldenrod"))) + labs(tag = "D") +
+  theme(plot.background = element_rect(color='black'))
+
 p1 | p2 | p3 | p4
 ```
 
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -286,7 +296,7 @@ class:  center, top
 p1 / p2 / p3 / p4 
 ```
 
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
 ---
 
 class:  center, top
@@ -297,7 +307,7 @@ class:  center, top
 p1 + p2 + p3 + p4
 ```
 
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
 ---
 
 class:  center, top
@@ -308,7 +318,7 @@ class:  center, top
 p1 / (p2 | (p3/p4))
 ```
 
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -323,14 +333,14 @@ class:  center, top
 - Be creative with (), / , |, and plot_layout()
 - Take 3 minutes to arrange some plots
 ]
-<div class="countdown" id="timer_5ebdbde1" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5ebdc654" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 ---
 class:  center, top
 
 ## This is Great, but How to Add a Combined Legend?
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -364,14 +374,14 @@ class:  center, top
 
 ## Fun with {ggtext}: Replace Legends with Colored Text
 
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
 
 ---
 
 class:  center, top
 
 ## Fun with {ggtext}: Add boxes to axes, titles
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -424,7 +434,7 @@ p1 + {
 ]
 
 .pull-right[
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 ]
 ---
 
@@ -473,7 +483,7 @@ class:  center, top
 
 ## Now Correct Width Legend - Achievement Unlocked!
 
-![](multipanel_patchwork_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+![](multipanel_patchwork_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -492,12 +502,12 @@ class:  center, top
 # Links to RStudio Community and StackOverflow Discussions
 
 &lt;br&gt;&lt;br&gt;
-[RStudio Community](https://community.rstudio.com/t/plot-in-a-box-with-long-text-legend-in-a-box/51962)
-&lt;br&gt;
+RStudio Community
+
 https://community.rstudio.com/t/plot-in-a-box-with-long-text-legend-in-a-box/51962
 &lt;br&gt;
 
-[Stack Overflow](https://stackoverflow.com/questions/60142452/multipanel-plots-with-spanning-figure-legend-in-r-with-ggtext-and-gridtext-in-r)
+Stack Overflow
 &lt;br&gt;
 https://stackoverflow.com/questions/60142452/multipanel-plots-with-spanning-figure-legend-in-r-with-ggtext-and-gridtext-in-r
 
@@ -522,6 +532,11 @@ https://pkg.garrickadenbuie.com/xaringanthemer/
 The {countdown} package for the timer
 &lt;br&gt;
 https://github.com/gadenbuie/countdown
+&lt;br&gt;
+
+Add a logo to each slide in {xaringan}
+&lt;br&gt;
+https://www.garrickadenbuie.com/blog/xaringan-tip-logo-all-slides/
 &lt;br&gt;
 
 Side-by-Side Code and Plots in {xaringan}&lt;br&gt;
