@@ -4,7 +4,8 @@
     <title>Multipanel Plots</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter D.R. Higgins" />
-    <meta name="date" content="2020-05-14" />
+    <meta name="date" content="2026-05-28" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/countdown/countdown.css" rel="stylesheet" />
     <script src="libs/countdown/countdown.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
@@ -13,11 +14,21 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Multipanel Plots
+]
+.subtitle[
 ## with {patchwork} and {ggtext}
+]
+.author[
 ### Peter D.R. Higgins
+]
+.institute[
 ### University of Michigan
-### 2020-05-14
+]
+.date[
+### 2026-05-28
+]
 
 ---
 
@@ -60,7 +71,7 @@ class: center, top
 ]
 ]
 
-&lt;img src="NEJM_multipanel.png" width="50%" height="50%" style="display: block; margin: auto 0 auto auto;" /&gt;
+&lt;img src="NEJM_multipanel.png" alt="" width="50%" height="50%" style="display: block; margin: auto 0 auto auto;" /&gt;
 
 ---
 
@@ -69,8 +80,10 @@ class: center, top
 ## Preparing to Code-Along for Multipanel Plots
 
 .left[
-- Feel free to join in and code along with me.     
-- Run the setup code chunk in the code-along Rmarkdown document.     
+- Feel free to join in and code along with me. 
+  - start by cloning the repo from https://github.com/higgi13425/multipanel_patchwork
+- Run the setup code chunk in the code-along Rmarkdown document.
+  - multipanel_code_along.Rmd
 - Make sure you have {tidyverse}, {patchwork}, and {ggtext} packages installed      
 - library() all 3 packages     
 - You can find details on **patchwork** at the {patchwork} packagedown site: &lt;br&gt;
@@ -78,9 +91,7 @@ https://patchwork.data-imaginist.com
 
 - Take 60 seconds to run the setup chunk, and explore the **patchwork** website/guides
 
-<div class="countdown" id="timer_5ebdc8e5" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
+<countdown-timer class="countdown" id="timer_f3861ce3" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 ]
 
 ---
@@ -107,7 +118,7 @@ class:  center, top
 3. Did I mention that the academic-journal-industrial complex is an unfortunate relic of the 1870s?
 ]
 
-&lt;img src="first_issue_nature.png" width="20%" height="20%" style="display: block; margin: auto;" /&gt;
+&lt;img src="first_issue_nature.png" alt="" width="20%" height="20%" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -130,7 +141,7 @@ class:  center, top
 ## Preparing data for 4 dummy plots
 .left[
 
-```r
+``` r
 # Library calls
 library(tidyverse)
 library(ggtext)
@@ -151,7 +162,7 @@ class:  center, top
 ## Single Plots, Plot 1 through Plot 4
 .left[
 
-```r
+``` r
 p1 &lt;- ggplot(data=plotData) + 
   geom_point(aes(x=d3, y=d4)) + labs(tag = "A") +
   theme(plot.background = 
@@ -177,7 +188,7 @@ class: center, top
 # Panel A: Scatterplot
 .pull-left[
 
-```r
+``` r
 ggplot(data=plotData) + 
   geom_point(aes(x=d3, y=d4)) + 
   labs(tag = "A") +
@@ -197,7 +208,7 @@ class:  center, top
 ## Panel B: Boxplot
 .pull-left[
 
-```r
+``` r
 ggplot(data=plotData) + 
   geom_boxplot(aes(x=d2, y=d1, fill=d2))+ 
   labs(tag = "B") +
@@ -218,7 +229,7 @@ class:  center, top
 ## Panel C: Orchid Histogram
 .pull-left[
 
-```r
+``` r
 ggplot(data=plotData) +
   geom_histogram(aes(x=d1, color=I("black"), 
                      fill=I("orchid"))) + 
@@ -238,7 +249,7 @@ class:  center, top
 ## Panel D: Goldenrod Histogram
 .pull-left[
 
-```r
+``` r
 ggplot(data=plotData) +
   geom_histogram(aes(x=d3, color=I("black"), 
                      fill=I("goldenrod"))) + 
@@ -263,7 +274,7 @@ class:  center, top
 
 ## Use  |  to Combine Plots in a row!
 
-```r
+``` r
 p1 &lt;- ggplot(data=plotData) + 
   geom_point(aes(x=d3, y=d4)) + labs(tag = "A") +
   theme(plot.background = 
@@ -292,7 +303,7 @@ class:  center, top
 
 ## Use  /  to Combine Plots in a Column!
 
-```r
+``` r
 p1 / p2 / p3 / p4 
 ```
 
@@ -303,7 +314,7 @@ class:  center, top
 
 ## Use  +  to Combine Plots in a 2 x 2 Grid!
 
-```r
+``` r
 p1 + p2 + p3 + p4
 ```
 
@@ -314,7 +325,7 @@ class:  center, top
 
 ## Make More Complex Multipanel Plots with Nesting!
 
-```r
+``` r
 p1 / (p2 | (p3/p4))
 ```
 
@@ -333,9 +344,7 @@ class:  center, top
 - Be creative with (), / , |, and plot_layout()
 - Take 3 minutes to arrange some plots
 ]
-<div class="countdown" id="timer_5ebdca83" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
+<countdown-timer class="countdown" id="timer_191f7061" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 ---
 class:  center, top
 
@@ -410,7 +419,7 @@ class:  center, top
 ## Code and Image - {ggtext} plot_annotation 
 .pull-left[
 
-```r
+``` r
 fig_legend &lt;- plot_annotation(
   caption = "**Figure 1.**  Testing Control vs. Treatment.   A. Scatterplot. 
   B. The outcomes in the control arm were significantly better than 
@@ -456,7 +465,7 @@ class:  center, top
 - With negative left and right margins (5.5 pt) 
 ]
 
-```r
+``` r
 fig_legend &lt;- plot_annotation(
   caption = "**Figure 1.**  Testing Control vs. Treatment.   A. Scatterplot. 
   B. The outcomes in the control arm were significantly better than 
@@ -492,19 +501,24 @@ class:  inverse, center, top
 ## Lessons Learned
 .left[
 - The #rstats community is awesome
-- Use {reprex} to ask questions on RStudio Community and Stack Overflow
+- Use {reprex} to ask questions on RStudio Community (now Posit Community) and Stack Overflow
 - Lots of people are willing to help if you can come up with a *minimal* reproducible example and&lt;br&gt;can state your question (and your end goal) clearly
 ]
 ---
 
 class:  center, top
 
-# Links to RStudio Community and StackOverflow Discussions
+# Links to RStudio (Posit) Community and StackOverflow Discussions
 
 &lt;br&gt;&lt;br&gt;
 RStudio Community
 
 https://community.rstudio.com/t/plot-in-a-box-with-long-text-legend-in-a-box/51962
+&lt;br&gt;
+
+Posit Community
+&lt;br&gt;
+https://forum.posit.co/
 &lt;br&gt;
 
 Stack Overflow
@@ -548,14 +562,15 @@ https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-i
 &lt;br&gt;
 
 {reprex} for minimal reproducible examples to ask questions &lt;br&gt;
-https://reprex.tidyverse.org/
+https://reprex.tidyverse.org/ 
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"countIncrementalSlides": false,
-"ratio": "16:9",
-"highlightLines": true
+  "countIncrementalSlides": false,
+  "ratio": "16:9",
+  "highlightLines": true
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -596,6 +611,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

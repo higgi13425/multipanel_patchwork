@@ -77,8 +77,10 @@ class: center, top
 ## Preparing to Code-Along for Multipanel Plots
 
 .left[
-- Feel free to join in and code along with me.     
-- Run the setup code chunk in the code-along Rmarkdown document.     
+- Feel free to join in and code along with me. 
+  - start by cloning the repo from https://github.com/higgi13425/multipanel_patchwork
+- Run the setup code chunk in the code-along Rmarkdown document.
+  - multipanel_code_along.Rmd
 - Make sure you have {tidyverse}, {patchwork}, and {ggtext} packages installed      
 - library() all 3 packages     
 - You can find details on **patchwork** at the {patchwork} packagedown site: <br>
@@ -636,19 +638,24 @@ class:  inverse, center, top
 ## Lessons Learned
 .left[
 - The #rstats community is awesome
-- Use {reprex} to ask questions on RStudio Community and Stack Overflow
+- Use {reprex} to ask questions on RStudio Community (now Posit Community) and Stack Overflow
 - Lots of people are willing to help if you can come up with a *minimal* reproducible example and<br>can state your question (and your end goal) clearly
 ]
 ---
 
 class:  center, top
 
-# Links to RStudio Community and StackOverflow Discussions
+# Links to RStudio (Posit) Community and StackOverflow Discussions
 
 <br><br>
 RStudio Community
 
 https://community.rstudio.com/t/plot-in-a-box-with-long-text-legend-in-a-box/51962
+<br>
+
+Posit Community
+<br>
+https://forum.posit.co/
 <br>
 
 Stack Overflow
